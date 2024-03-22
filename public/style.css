@@ -1,12 +1,15 @@
+/* Import fonts */
 @import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400;600;700");
 @import url("https://fonts.googleapis.com/css2?family=Inter");
 
+/* Global styles */
 html {
   background: #101014;
   color: #fff;
   font-family: Inter, sans-serif;
 }
 
+/* Main content */
 main {
   margin-left: auto;
   margin-right: auto;
@@ -24,6 +27,7 @@ main {
   }
 }
 
+/* Grid container */
 .grid-container {
   display: grid;
   gap: 1rem;
@@ -35,77 +39,60 @@ main {
   }
 }
 
+/* Text-to-speech section */
 .tts-section {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
+/* Button container */
 .button-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
+/* Button icon */
+.button-icon {
+  color: #00dda2;
+  font-size: 1.5rem;
+}
+
+/* Spinner animation */
+.fa-circle-notch {
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+/* Button styling */
 button {
-  border: none;
-  color: #fff;
-  font-family: Inter, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: var(--radius, 4px);
-  background: #101014;
-  height: 48px;
-  width: 113px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-sizing: border-box;
-  background-color: transparent;
-  outline: 0;
-  border: 0;
-  margin: 0;
-  border-radius: 0;
-  padding: 0;
-  cursor: pointer;
-  user-select: none;
-  vertical-align: middle;
-  text-decoration: none;
-  color: inherit;
-  font-family: "ABCFavorit", "Arial Nova", sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  min-width: 64px;
-  padding: 6px 16px;
-  border-radius: 4px;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  color: rgba(0, 0, 0, 0.87);
-  min-width: 0;
-  text-transform: capitalize;
-  font-weight: 600;
-  border-radius: 4px;
-  font-size: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  transition: unset;
-  white-space: nowrap;
-  position: relative;
-  font-size: 1rem;
-  line-height: 2;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
   background: linear-gradient(#000, #000) padding-box,
     linear-gradient(90deg, #201cff -91.5%, #13ef95 80.05%) border-box;
-  color: #ffffff;
+  height: 48px;
+  width: 113px;
   border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+/* Error message */
+#error-message {
+  color: rgb(255, 74, 93);
+  font-weight: 800;
+}
+
+/* Dropdown select */
 select {
   height: 54px;
   border-radius: 4px;
@@ -118,11 +105,14 @@ select {
   color: white;
 }
 
+/* Label */
 label {
   font-size: 14px;
 }
 
+/* Textarea */
 textarea {
+  color: white;
   display: flex;
   min-height: 256px;
   border-radius: 4px;
@@ -132,13 +122,16 @@ textarea {
   padding: 1rem;
   font-family: Fira Code, monospace;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  resize: none;
 }
 
+/* Deepgram logo */
 .dg-logo {
   padding-top: 0.75rem;
   width: 10rem;
 }
 
+/* Title */
 .title {
   display: flex;
   gap: 0.5rem;
@@ -162,21 +155,18 @@ h1 {
   font-family: Arimo;
 }
 
-h2 {
-  font: 700 2rem / 3.75rem Arimo;
-  letter-spacing: -0.02em;
-}
-
-a {
-  margin: 0;
-}
-
 @media (min-width: 640px) {
   h1 {
     font-size: 3.5rem;
   }
 }
 
+h2 {
+  font: 700 2rem / 3.75rem Arimo;
+  letter-spacing: -0.02em;
+}
+
+/* Information section */
 .information-section {
   margin-left: 0;
 }
@@ -188,7 +178,9 @@ a {
   }
 }
 
+/* List */
 ul {
+  font-family: "Arimo";
   display: flex;
   padding-left: 0px;
   gap: 16px;
@@ -202,9 +194,10 @@ li {
 
 li::marker {
   color: #13ef95;
-  /* font-size: 30px; */
 }
 
+/* Links */
 a {
   color: #13ef95;
+  text-decoration: none;
 }
