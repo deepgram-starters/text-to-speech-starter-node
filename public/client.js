@@ -5,7 +5,7 @@ const PLAY_STATES = {
 };
 
 let playState = PLAY_STATES.NO_AUDIO;
-let audio;
+let audioPlayer;
 const textArea = document.getElementById("text-input");
 const errorMessage = document.querySelector("#error-message");
 
@@ -31,25 +31,18 @@ function updatePlayButton() {
 
 // Function to play audio
 function playAudio(audioUrl) {
-  if (audio) {
-    stopAudio();
-  }
-  currentAudioUrl = audioUrl + "?t=" + new Date().getTime(); // Add cache-busting query parameter
-  audio = new Audio(currentAudioUrl);
-
-  audio.play();
-
-  audio.addEventListener("ended", () => {
-    console.log("Audio finished playing");
-    stopAudio();
-  });
+  audioPlayer = document.getElementById("audio-player");
+  audioPlayer.src = audioUrl + "?t=" + new Date().getTime(); // Add cache-busting query parameter
+  audioPlayer.play();
 }
 
 // Function to stop audio
 function stopAudio() {
-  if (audio) {
-    audio.pause();
-    audio.currentTime = 0;
+  audioPlayer = document.getElementById("audio-player");
+  if (audioPlayer) {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+    audioPlayer = null;
   }
 }
 
@@ -99,16 +92,26 @@ function sendData() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Response received from server:", data);
-        playAudio(data.audioUrl);
         playState = PLAY_STATES.PLAYING;
         updatePlayButton();
+
+        // Check if there's an existing audio source and stop it
+        stopAudio();
+
+        // Create a Blob from the response data
+        return response.blob();
+      })
+      .then((blob) => {
+        // Create an object URL from the Blob
+        const audioUrl = URL.createObjectURL(blob);
+
+        // Create an audio element and play the audio URL
+        const audioPlayer = document.getElementById("audio-player");
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
       })
       .catch((error) => {
-        console.error("There was a problem with your fetch operation:", error);
+        console.error("Error fetching audio:", error);
         playState = PLAY_STATES.NO_AUDIO;
         updatePlayButton();
       });
