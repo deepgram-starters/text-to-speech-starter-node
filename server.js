@@ -37,8 +37,15 @@ const getAudio = async (text, model) => {
     const buffer = await getAudioBuffer(stream);
 
     try {
+      // Ensure 'audio' directory exists
+      const audioDirectory = path.join(__dirname, "audio");
+      if (!fs.existsSync(audioDirectory)) {
+        fs.mkdirSync(audioDirectory);
+      }
+
+      // Write audio file to 'audio' directory
       await new Promise((resolve, reject) => {
-        fs.writeFile("audio/audio.wav", buffer, (err) => {
+        fs.writeFile(path.join(audioDirectory, "audio.wav"), buffer, (err) => {
           if (err) {
             console.error("Error writing audio to file:", err);
             reject(err);
