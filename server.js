@@ -13,7 +13,6 @@ app.use(express.json());
 const deepgram = createClient(process.env.DEEPGRAM_API_KEY);
 
 app.use(express.static("public/"));
-app.use("/audio", express.static("audio"));
 
 app.post("/api", async (req, res) => {
   const { body } = req;
