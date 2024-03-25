@@ -29,17 +29,12 @@ function updatePlayButton() {
   }
 }
 
-// Function to play audio
-function playAudio(audioUrl) {
-  audioPlayer = document.getElementById("audio-player");
-  audioPlayer.src = audioUrl + "?t=" + new Date().getTime(); // Add cache-busting query parameter
-  audioPlayer.play();
-}
-
 // Function to stop audio
 function stopAudio() {
   audioPlayer = document.getElementById("audio-player");
   if (audioPlayer) {
+    playState = PLAY_STATES.PLAYING;
+    updatePlayButton();
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
     audioPlayer = null;
@@ -109,6 +104,11 @@ function sendData() {
         const audioPlayer = document.getElementById("audio-player");
         audioPlayer.src = audioUrl;
         audioPlayer.play();
+
+        audioPlayer.addEventListener("ended", () => {
+          playState = PLAY_STATES.NO_AUDIO;
+          updatePlayButton();
+        });
       })
       .catch((error) => {
         console.error("Error fetching audio:", error);
