@@ -1,0 +1,17 @@
+[meta]
+  title = "Text-to-speech Node.js Starter"
+  description = "This example app demonstrates how to use the Deepgram Text-to-Speech API with Node.js"
+  author = "Deepgram DX Team <devrel@deepgram.com> (https://developers.deepgram.com)"
+  useCase = "TTS"
+  language = "JavaScript"
+  framework = "Node"
+
+[build]
+  command = "npm install"
+
+[config]
+  sample = "sample.env"
+  output = ".env"
+
+[post-build]
+  message = "Run `npm run start` to get up and running."
