@@ -2,6 +2,8 @@
 
 This example app demonstrates how to use the Deepgram Text-to-Speech API with Node.js.
 
+<img src="/static/assets/preview-starter.png" alt="A preview of the app" style="width: 400px; height: auto; border-radius: 10px; margin-top: 20px;">
+
 ## What is Deepgram?
 
 [Deepgram](https://deepgram.com/) is a voice AI company providing speech-to-text and language understanding capabilities to make data readable and actionable by human or machines.
