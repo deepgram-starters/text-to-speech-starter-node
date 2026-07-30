@@ -6,7 +6,7 @@ repository = "https://github.com/deepgram-starters/node-text-to-speech"
 useCase = "text-to-speech"
 language = "javascript"
 framework = "node"
-sdk = "4.11.3"
+sdk = "@deepgram/sdk"
 tags = ["text-to-speech", "tts", "speech-synthesis", "javascript", "node"]
 
 [check]
