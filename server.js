@@ -16,7 +16,7 @@
 
 require("dotenv").config();
 
-const { createClient } = require("@deepgram/sdk");
+const { DeepgramClient } = require("@deepgram/sdk");
 const cors = require("cors");
 const crypto = require("crypto");
 const express = require("express");
@@ -137,7 +137,7 @@ const apiKey = loadApiKey();
 // ============================================================================
 
 // Initialize Deepgram client
-const deepgram = createClient(apiKey);
+const deepgram = new DeepgramClient({ apiKey });
 
 // Initialize Express app
 const app = express();
@@ -162,29 +162,6 @@ function validateTextInput(text) {
 }
 
 /**
- * Converts a stream to a buffer
- * @param {ReadableStream} stream - The stream to convert
- * @returns {Promise<Buffer>} - The buffer containing all stream data
- */
-async function streamToBuffer(stream) {
-  const reader = stream.getReader();
-  const chunks = [];
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    chunks.push(value);
-  }
-
-  const dataArray = chunks.reduce(
-    (acc, chunk) => Uint8Array.from([...acc, ...chunk]),
-    new Uint8Array(0)
-  );
-
-  return Buffer.from(dataArray.buffer);
-}
-
-/**
  * Generates audio from text using Deepgram's text-to-speech API
  * @param {string} text - The text to convert to speech
  * @param {string} model - Model name to use (e.g., "aura-2-thalia-en")
@@ -192,15 +169,11 @@ async function streamToBuffer(stream) {
  */
 async function generateAudio(text, model = DEFAULT_MODEL) {
   try {
-    const response = await deepgram.speak.request({ text }, { model });
-    const stream = await response.getStream();
-
-    if (!stream) {
-      throw new Error("No audio stream returned from Deepgram");
-    }
-
-    const buffer = await streamToBuffer(stream);
-    return buffer;
+    // speak.v1.audio.generate returns a binary response (throws on error).
+    // No encoding/container specified -> Deepgram defaults to MP3.
+    const response = await deepgram.speak.v1.audio.generate({ text, model });
+    const arrayBuffer = await response.arrayBuffer();
+    return Buffer.from(arrayBuffer);
   } catch (error) {
     console.error("Error generating audio:", error);
     throw new Error(`Failed to generate audio: ${error.message}`);
